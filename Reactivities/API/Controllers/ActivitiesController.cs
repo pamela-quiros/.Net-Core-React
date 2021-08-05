@@ -5,15 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using Application.Activities;
 using Application;
+using System.Threading;
 
 namespace API.Controllers
 {
     public class ActivitiesController : BaseAPIController
     {
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>> GetActivities()
+        public async Task<ActionResult<List<Activity>>> GetActivities(CancellationToken ct)
         {
-            return await Mediator.Send(new List.Query());
+            return await Mediator.Send(new List.Query(), ct);
         }
 
         [HttpGet("{id}")] //activities/id
